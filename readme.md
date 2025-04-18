@@ -9,10 +9,10 @@ This service provides **bidirectional synchronization** between VSCode folders i
 ## 📂 Folder Structure
 
 **Sync Source (inside WSL):**
-- `/home/{user}/vscode/`
+- `/home/{lnx-user}/vscode/`
 
 **Sync Destination (in Windows OneDrive):**
-- `/mnt/c/Users/Mateo/OneDrive/vscode/{user}/vscode/`
+- `/mnt/c/Users/{win-user}/OneDrive/{lnx-user}/vscode/`
 
 ---
 
@@ -32,7 +32,7 @@ Paste the following script inside:
 #!/usr/bin/env bash
 set -euo pipefail
 
-ONEDRIVE_BASE="/mnt/c/Users/Mateo/OneDrive/vscode"
+ONEDRIVE_BASE="/mnt/c/Users/{win-user}/OneDrive/wsl-sync"
 
 for userDir in /home/*; do
     [ -d "$userDir" ] || continue
@@ -117,7 +117,7 @@ journalctl -u wsl-sync.service
 
 ## ✅ Notes
 
-- The service assumes your OneDrive is mounted under `/mnt/c/Users/Mateo/OneDrive`.
+- The service assumes your OneDrive is mounted under `/mnt/c/Users/{win-user}/OneDrive`.
 - You can modify the `ONEDRIVE_BASE` variable in the script to match your setup.
 - To make the sync periodic, consider adding a `cron` job or using a `systemd timer`.
 
